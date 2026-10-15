@@ -5,12 +5,8 @@ const cors = require('cors');
 
 const app = express();
 
-const origins = (process.env.CORS_ORIGIN || '')
-  .split(',')
-  .map((o) => o.trim().replace(/\/$/, ''))
-  .filter(Boolean);
-
-app.use(cors({ origin: origins.length ? origins : true }));
+// CORS_ORIGIN is a comma-separated list, e.g. http://localhost:5173,https://app.vercel.app
+app.use(cors({ origin: process.env.CORS_ORIGIN.split(',') }));
 app.use(express.json());
 
 // Cached connection so serverless invocations reuse it
